@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+base="$(cd "$(dirname "$0")/.." && pwd)"
+export CODER_URL=http://localhost:3000
+export CODER_CONFIG_DIR="$base/.state/cli"
+export CODER_SESSION_TOKEN="$(cat "$base/.state/admin-token")"
+exec coder "$@"
