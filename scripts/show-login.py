@@ -1,4 +1,4 @@
-"""Use off camera only. Shows this demo's generated local login, never API keys."""
+"""Display the generated local Coder login. Keep this output private."""
 import json
 from pathlib import Path
 login=json.loads((Path(__file__).resolve().parents[1]/".state/admin-login.json").read_text())
