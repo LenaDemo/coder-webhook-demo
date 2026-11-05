@@ -1,4 +1,4 @@
-"""Submit the real fix through Coder's Chats API. Run this DURING recording."""
+"""Submit the OrderDesk task through Coder's Chats API."""
 import argparse
 import json
 import os
@@ -46,7 +46,7 @@ def main():
         model=next((m for m in configuration.get("models",[]) if m.get("enabled")
                     and m.get("is_default") and m.get("ai_provider_id") in available),None)
         if model is None:
-            raise SystemExit("Configure an available default model in Coder before recording.")
+            raise SystemExit("Configure an available default model in Coder first.")
         print("Configured model: "+model["display_name"])
         if args.command=="preflight":
             print("API authentication, workspace lookup, and model configuration checks passed. No model was called.")
