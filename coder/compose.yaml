@@ -1,0 +1,44 @@
+name: lena-coder-demo
+services:
+  database:
+    image: postgres:17-alpine@sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b
+    environment:
+      POSTGRES_USER: coder
+      POSTGRES_DB: coder
+      POSTGRES_PASSWORD: ${CODER_DB_PASSWORD:?Run scripts/setup.py first}
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coder -d coder"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  coder:
+    image: lena-coder-control:2.39.0
+    user: "1000:1000"
+    group_add: ["0"]
+    ports:
+      - "127.0.0.1:3000:7080"
+    environment:
+      CODER_HTTP_ADDRESS: 0.0.0.0:7080
+      CODER_ACCESS_URL: http://localhost:3000
+      CODER_PG_CONNECTION_URL: postgresql://coder:${CODER_DB_PASSWORD}@database/coder?sslmode=disable
+      CODER_PROVISIONER_DAEMONS: "1"
+      CODER_TELEMETRY_ENABLE: "false"
+      CODER_UPDATE_CHECK: "false"
+      CODER_DERP_SERVER_ENABLE: "true"
+      CODER_DERP_CONFIG_BLOCK_DIRECT: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - coder-home:/home/coder
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+networks:
+  default:
+    name: lena-coder-demo
+volumes:
+  database:
+  coder-home:
