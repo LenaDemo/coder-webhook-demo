@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OrderDesk</title><link rel="stylesheet" href="style.css"></head><body>
+<header><a class="brand" href="./"><span class="mark">O</span>OrderDesk</a><div class="header-right"><span class="live-dot"></span>Local demo<span class="pill">Fictional orders</span></div></header>
+<main>
+<div class="heading"><div><p class="eyebrow">ORDER OPERATIONS</p><h1>Every event. Every order.</h1><p class="sub">See what happens when an order notification arrives more than once.</p></div><button id="reset" class="quiet">Reset demo data</button></div>
+<section class="metrics" aria-label="Live database totals">
+<article><p>Deliveries received</p><strong id="deliveries-count">0</strong><small>All webhook attempts</small></article>
+<article><p>Distinct event IDs</p><strong id="events-count">0</strong><small>Unique notifications received</small></article>
+<article><p>Orders created</p><strong id="orders-count">0</strong><small>Rows saved in the database</small></article>
+<article id="extra-card"><p>Extra orders</p><strong id="extras-count">0</strong><small>Additional orders for the same event</small></article>
+</section>
+<div class="columns">
+<section class="panel sender"><div class="panel-heading"><h2>Send a notification</h2><span class="label">Webhook sender</span></div>
+<label for="event">Event</label><select id="event"><option value="evt_1001">evt_1001 - Avery Chen</option><option value="evt_1002">evt_1002 - Morgan Lee</option><option value="evt_1003">evt_1003 - Jordan Ellis</option><option value="evt_1004">evt_1004 - Sam Rivera</option></select>
+<div class="sample"><div><span>Order reference</span><b id="reference"></b></div><div><span>Product</span><b id="product"></b></div><div><span>Amount</span><b id="amount"></b></div></div>
+<button class="primary" id="repeat">Send the same event 5 times</button><div class="button-row"><button id="once">Send once</button><button id="concurrent">Send 10 at once</button></div>
+<details><summary>Failure and retry check</summary><p class="hint">Cause one request to fail immediately before its database commit. Then retry the same event normally.</p><button id="fail">Send with a pre-commit failure</button></details>
+<div id="result" role="status" aria-live="polite">Ready to send a sample notification.</div></section>
+<section class="panel orders"><div class="panel-heading"><h2>Orders</h2><span id="order-label" class="label">0 saved</span></div><div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer / product</th><th>Event ID</th><th>Amount</th></tr></thead><tbody id="orders-body"></tbody></table><div id="empty" class="empty"><div class="empty-icon">O</div><h3>No orders yet</h3><p>Send a notification to see what the app saves.</p></div></div></section>
+</div>
+<section class="panel activity"><div class="panel-heading"><h2>Delivery log</h2><span class="label">Real HTTP responses</span></div><div id="activity-body" class="activity-body"><p class="muted">No deliveries yet.</p></div></section>
+<footer>Demo data only. No payments or external commerce services.</footer>
+</main><script src="app.js"></script></body></html>
