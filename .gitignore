@@ -1,0 +1,10 @@
+.state/
+.env
+__pycache__/
+*.pyc
+*.sqlite3*
+*.log
+.data/
+.DS_Store
+coder/template/.terraform/
+*.tfstate*

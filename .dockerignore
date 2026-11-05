@@ -1,0 +1,6 @@
+.state
+.env
+.git
+**/.data
+**/__pycache__
+coder/template/.terraform
