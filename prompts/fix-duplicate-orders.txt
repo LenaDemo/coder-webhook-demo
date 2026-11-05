@@ -1,0 +1,14 @@
+Work in the existing OrderDesk workspace at /home/coder/orderdesk.
+
+The webhook consumer creates five orders when I deliver evt_1001 five times. Fix this bug and add regression tests.
+
+Requirements:
+1. A first delivery creates one order. Repeated deliveries of the same event_id return the existing order without creating another.
+2. The deduplication state must persist in SQLite across an app restart.
+3. Ten concurrent deliveries of a previously unseen event must create exactly one order. Use database-enforced correctness that also works across separate processes, not just an in-memory set or a thread lock.
+4. Save the event's processed state and its order in one database transaction. Keep the existing before_commit failure hook after all writes and before commit. A failed attempt must leave no processed marker or order behind, and a retry must succeed.
+5. A genuinely different event must still create a new order.
+6. Preserve the existing JSON contract, UI, demo controls, and existing tests. Add focused regression tests using temporary databases, including process-level concurrency and rollback/retry.
+7. Do not hide the bug by changing the sender or ignoring requests. Do not push or publish anything.
+
+First reproduce the bug using isolated test data. Implement the fix, run the tests, and explain the code changes and any limitations. Restart the app after the change, preserving the live database. Leave demo data resets to me.
